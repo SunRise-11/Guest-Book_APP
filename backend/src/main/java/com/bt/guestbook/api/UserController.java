@@ -19,18 +19,18 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user")
-    public ResponseEntity<List<AppUser>>getUsers() {
+    public ResponseEntity<List<AppUser>> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @PostMapping("/user")
-    public ResponseEntity<AppUser>createUser(@RequestBody AppUser user) {
+    public ResponseEntity<AppUser> createUser(@RequestBody AppUser user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity<String>deleteUser(@RequestBody Long id) {
+    public ResponseEntity<String> deleteUser(@RequestBody Long id) {
         boolean deleteUser = userService.deleteUserById(id);
 
         if (deleteUser) {

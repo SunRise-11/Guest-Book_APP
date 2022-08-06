@@ -8,14 +8,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUser {
-    private @Id @GeneratedValue(strategy = AUTO) Long id;
+    private @Id
+    @GeneratedValue(strategy = AUTO) Long id;
+    @Column(unique = true)
     private String username;
 
     @JsonIgnore

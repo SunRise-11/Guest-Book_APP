@@ -23,7 +23,6 @@ import java.util.Map;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -39,6 +38,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 try {
+                    log.info("attempting to valid token");
+
                     String token = authorizationHeader.substring("Bearer ".length());
                     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
@@ -51,6 +52,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));
                     });
+
+                    log.info(authorities.toString());
 
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, authorities);
@@ -69,6 +72,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
             } else {
+                log.info("user not authenticated");
                 filterChain.doFilter(request, response);
             }
         }

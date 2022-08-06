@@ -44,7 +44,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        User user = (User)authResult.getPrincipal();
+        User user = (User) authResult.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
         String accessToken = JWT.create()

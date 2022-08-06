@@ -16,26 +16,35 @@ import java.util.ArrayList;
 @SpringBootApplication
 public class GuestbookApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GuestbookApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GuestbookApplication.class, args);
+    }
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	CommandLineRunner run (UserService userService, PostService postService) {
-		return args -> {
-			AppUser admin = new AppUser(null, "admin", "password", true, new ArrayList<>());
-			userService.saveUser(admin);
-			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-			postService.savePost(new Post(null, null, "text", "this is a post", false), "admin");
-			postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "admin");
-		};
-	}
+    @Bean
+    CommandLineRunner run(UserService userService, PostService postService) {
+        return args -> {
+            AppUser admin = new AppUser(null, "admin", "password", true, new ArrayList<>());
+            userService.saveUser(admin);
+
+            AppUser user = new AppUser(null, "user", "password", false, new ArrayList<>());
+            userService.saveUser(user);
+
+            AppUser user2 = new AppUser(null, "user2", "password", false, new ArrayList<>());
+            userService.saveUser(user2);
+
+            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true), "user");
+
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "user");
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "admin");
+        };
+    }
 
 }

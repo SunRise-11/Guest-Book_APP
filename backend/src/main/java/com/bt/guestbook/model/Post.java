@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 
@@ -16,10 +15,11 @@ import static javax.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
-    private @Id @GeneratedValue(strategy = AUTO) Long id;
+    private @Id
+    @GeneratedValue(strategy = AUTO) Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "user_id",referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private AppUser user;
 
     private String type;

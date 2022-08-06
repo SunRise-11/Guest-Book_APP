@@ -11,12 +11,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Service @RequiredArgsConstructor @Transactional @Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,10 +37,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         if (user.isAdmin()) {
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else {
-            authorities.add(new SimpleGrantedAuthority("USER"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
+
+        log.info(authorities.toString());
 
         return new User(user.getUsername(), user.getPassword(), authorities);
     }
