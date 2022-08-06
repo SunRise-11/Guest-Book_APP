@@ -6,11 +6,13 @@ import com.bt.guestbook.repository.PostRepository;
 import com.bt.guestbook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +37,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post getPostById(Long id) {
+        return postRepository.getById(id);
+    }
+
+    @Override
     public Post approvedPost(Long id) {
         Post post = postRepository.getById(id);
         post.setApproved(true);
@@ -42,12 +49,41 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean removePostById(Long id) {
-        try {
-            postRepository.delete(postRepository.getById(id));
-            return true;
-        } catch (Exception e) {
-            return false;
+    public void removePostById(Long id) {
+        Post post = postRepository.getById(id);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = userRepository.getUserByUsername(auth.getPrincipal().toString());
+
+        if (user.isAdmin() || Objects.equals(post.getUser().getId(), user.getId())) {
+            try {
+                postRepository.delete(postRepository.getById(id));
+            } catch (Exception e) {
+                throw new RuntimeException("failed to delete post");
+            }
         }
+
+        throw new RuntimeException("failed to delete post");
+    }
+
+    @Override
+    public Post updatePost(Post post) {
+        Post storedPost = postRepository.getById(post.getId());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = userRepository.getUserByUsername(auth.getPrincipal().toString());
+
+        if (user.isAdmin() || Objects.equals(storedPost.getUser().getId(), user.getId())) {
+            storedPost.setType(post.getType());
+            storedPost.setData(post.getData());
+            return storedPost;
+        }
+
+        throw new RuntimeException("failed to delete post");
+    }
+
+    @Override
+    public List<Post> getPendingPosts() {
+        return postRepository.findByApprovedFalse();
     }
 }
