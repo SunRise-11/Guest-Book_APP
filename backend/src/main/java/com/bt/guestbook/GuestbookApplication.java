@@ -30,8 +30,11 @@ public class GuestbookApplication {
 		return args -> {
 			AppUser admin = new AppUser(null, "admin", "password", true, new ArrayList<>());
 			userService.saveUser(admin);
-			postService.savePost(new Post(null, admin, "text", "this is a post", true));
-			postService.savePost(new Post(null, admin, "text", "this is a post that is not approved", false));
+			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+			postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
+			postService.savePost(new Post(null, null, "text", "this is a post", false), "admin");
+			postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "admin");
 		};
 	}
 
