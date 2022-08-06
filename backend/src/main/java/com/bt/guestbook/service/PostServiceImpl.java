@@ -21,17 +21,11 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
 
     @Override
-    public Post savePost(Post post) {
-        AppUser user = userRepository.getById(post.getUser().getId());
-
-        Post newPost = new Post();
-        newPost.setUser(user);
-        newPost.setData(post.getData());
-        newPost.setApproved(false);
-        newPost.setType(post.getType());
-
-        log.info("saving post by {}", user.getUsername());
-        return postRepository.save(newPost);
+    public Post savePost(Post post, String username) {
+        AppUser user = userRepository.getUserByUsername(username);
+        log.info("saving post by {} with id {}", user.getUsername(), user.getId());
+        post.setUser(user);
+        return postRepository.save(post);
     }
 
     @Override
