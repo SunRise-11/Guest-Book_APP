@@ -41,3 +41,16 @@ Technologies to use (Please use most recent supported versions available):
 - Guest users need to login to write an entry
 - Administrator can view, edit, approve or delete entries
 - Share Github or Bitbucket URL
+
+## API Endpoints
+
+| Endpoint              | Description                                 | Permission Level |
+|-----------------------|---------------------------------------------|------------------|
+| POST /api/auth/login  | log user in                                 | ALL              |
+| GET /api/auth/refresh | refresh auth token                          | ALL              |
+| GET /api/post         | gets all approved posts                     | ALL              |
+| POST /api/post        | creates a new post                          | USER             |
+| DELETE /api/post      | deletes a post (if admin or user owns post) | USER             |
+| PUT /api/post         | edits a post (if admin or user owns post)   | USER             |
+| GET /api/post/{id}    | approves post with ID {id}                  | ADMIN            |
+| GET /api/post/pending | gets all posts pending approval             | ADMIN            |
