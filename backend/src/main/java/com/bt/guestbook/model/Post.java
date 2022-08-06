@@ -1,11 +1,10 @@
 package com.bt.guestbook.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Where;
+import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 
@@ -15,6 +14,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
     private @Id @GeneratedValue(strategy = AUTO) Long id;
 

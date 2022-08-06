@@ -1,7 +1,6 @@
 package com.bt.guestbook.repository;
 
 import com.bt.guestbook.model.Post;
-import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
