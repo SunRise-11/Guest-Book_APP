@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -40,11 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(GET, "/api/post").permitAll();
         http.authorizeRequests().antMatchers("/api/auth/**").permitAll();
 
-        http.authorizeRequests().antMatchers( "/api/post/**").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers( "/api/post/approve/**").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers(POST, "/api/post").hasAnyAuthority("USER");
-        http.authorizeRequests().antMatchers(DELETE, "/api/post").hasAnyAuthority("USER");
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers("/api/post").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/api/post/**").hasAnyAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated();
 
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilter(authenticationFilter);
