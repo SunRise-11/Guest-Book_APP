@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -30,7 +31,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/login")) {
+        if (request.getServletPath().equals("/api/auth/login") ||
+                request.getServletPath().equals("/api/auth/refresh") ||
+                (request.getMethod().equals("GET") && request.getServletPath().equals("/api/post"))) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -56,8 +59,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
                     log.error("error occurred when logging in: {}", e.getMessage());
+
                     response.setHeader("error", e.getMessage());
-                     response.setStatus(FORBIDDEN.value());
+                    response.setStatus(FORBIDDEN.value());
+
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", e.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
