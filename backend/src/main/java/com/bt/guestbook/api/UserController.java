@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user")
-    public ResponseEntity<List<AppUser>>createUser() {
+    public ResponseEntity<List<AppUser>>getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
