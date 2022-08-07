@@ -42,8 +42,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
 
-        log.info(authorities.toString());
-
         return new User(user.getUsername(), user.getPassword(), authorities);
     }
 
