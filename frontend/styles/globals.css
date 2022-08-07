@@ -13,7 +13,7 @@ main {
 }
 
 .post_input .create_btn {
-  @apply absolute w-full h-12 flex items-center justify-center bg-stone-100 hover:bg-stone-200 rounded-md;
+  @apply absolute z-0 w-full h-12 flex items-center justify-center bg-stone-100 hover:bg-stone-200 rounded-md;
 }
 
 .post_input textarea {
