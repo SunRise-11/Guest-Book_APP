@@ -1,34 +1,24 @@
 import { Transition } from "@headlessui/react";
 import { getCookie } from "cookies-next";
 import React, { useState } from "react";
-import requestAPI from "../../lib/request";
+import requestAPI from "../../lib/requestAPI";
 
 const TextInput: React.FC = () => {
   const [isShowing, setIsShowing] = useState(false);
   const [data, setData] = useState("");
   const [error, setError] = useState("");
 
-  const handleCreatePost = (e: React.MouseEvent<HTMLElement>) => {
+  const handleCreatePost = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    requestAPI({
-      url: "http://localhost:8080/api/post",
-      options: {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + getCookie("access_token"),
-        },
-        body: JSON.stringify({
-          type: "text",
-          data,
-        }),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {});
+    const res = await requestAPI.post("/post", {
+      type: "text",
+      data,
+    });
+
+    if (res.status === 201) {
+      setData("");
+      setIsShowing(false);
+    }
   };
 
   return (
@@ -53,14 +43,18 @@ const TextInput: React.FC = () => {
       <Transition
         show={isShowing}
         enter="transition-all ease duration-700 transform"
-        enterFrom="opacity-0 h-12"
-        enterTo="opacity-100 h-48"
+        enterFrom=" h-12"
+        enterTo=" h-48"
         leave="transition-all ease duration-1000 transform"
-        leaveFrom="opacity-100 h-48"
+        leaveFrom="h-48"
         leaveTo="opacity-0 h-12"
         className="w-full overflow-hidden flex flex-wrap justify-end space-y-2"
       >
-        <textarea placeholder="Write something here..."></textarea>
+        <textarea
+          placeholder="Write something here..."
+          value={data}
+          onChange={(e) => setData(e.target.value)}
+        ></textarea>
         {error && <p className="text-red-500 text-sm">Error: {error}</p>}
         <button
           type="button"
