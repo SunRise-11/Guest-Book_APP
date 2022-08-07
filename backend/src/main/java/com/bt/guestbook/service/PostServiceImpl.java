@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.management.RuntimeErrorException;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -43,9 +45,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post approvedPost(Long id) {
-        Post post = postRepository.getById(id);
-        post.setApproved(true);
-        return post;
+        try {
+            Post post = postRepository.getById(id);
+            post.setApproved(true);
+            return post;
+        } catch (Exception e) {
+            throw new RuntimeException(String.format("post with id %s does not exist", id));
+        }
     }
 
     @Override
