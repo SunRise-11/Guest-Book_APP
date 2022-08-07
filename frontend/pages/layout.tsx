@@ -1,24 +1,18 @@
-import { getCookie } from "cookies-next";
-import { atom, useAtom } from "jotai";
-import React, { PropsWithChildren, useEffect, useLayoutEffect } from "react";
-import { decodeToken } from "react-jwt";
-import Login, { JWT, userAtom } from "./components/Login";
+import { useAtom } from "jotai";
+import React, { PropsWithChildren, useEffect } from "react";
+import Login, { userAtom } from "./components/Login";
+import tokenHandler from "./lib/tokenHandler";
+
+const isToken = (token: any): boolean => token && typeof token === "string";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => {
-    if (!user?.username) {
-      const accessToken = getCookie("access_token");
-      if (accessToken && typeof accessToken === "string") {
-        const decoded = decodeToken<JWT>(accessToken);
-
-        if (decoded) {
-          setUser({
-            username: decoded.sub,
-            isAdmin: decoded?.roles.some((role) => role === "ROLE_ADMIN"),
-          });
-        }
+    if (!user) {
+      const storedUser = tokenHandler.getUser();
+      if (storedUser !== undefined) {
+        setUser(storedUser);
       }
     }
   }, [setUser, user]);
