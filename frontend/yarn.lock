@@ -123,6 +123,11 @@
   "resolved" "https://registry.npmjs.org/@types/cookie/-/cookie-0.4.1.tgz"
   "version" "0.4.1"
 
+"@types/dateformat@^5.0.0":
+  "integrity" "sha512-SZg4JdHIWHQGEokbYGZSDvo5wA4TLYPXaqhigs/wH+REDOejcJzgH+qyY+HtEUtWOZxEUkbhbdYPqQDiEgrXeA=="
+  "resolved" "https://registry.npmjs.org/@types/dateformat/-/dateformat-5.0.0.tgz"
+  "version" "5.0.0"
+
 "@types/json5@^0.0.29":
   "integrity" "sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ=="
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
@@ -147,6 +152,13 @@
   "integrity" "sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.6.tgz"
   "version" "18.0.6"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-timeago@^4.1.3":
+  "integrity" "sha512-XaaMBzuXLw7lxPPDs/fenlohcf3NDqM5qP4oOL/Meu+Hb1QChW4Igw/SruS1llEqch18RQB3wDTIwvqq4nivvw=="
+  "resolved" "https://registry.npmjs.org/@types/react-timeago/-/react-timeago-4.1.3.tgz"
+  "version" "4.1.3"
   dependencies:
     "@types/react" "*"
 
@@ -533,6 +545,16 @@
   "integrity" "sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA=="
   "resolved" "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz"
   "version" "1.0.8"
+
+"dateformat@^5.0.3":
+  "integrity" "sha512-Kvr6HmPXUMerlLcLF+Pwq3K7apHpYmGDVqrxcDasBg86UcKeTSNWbEzU8bwdXnxnR44FtMhJAxI4Bov6Y/KUfA=="
+  "resolved" "https://registry.npmjs.org/dateformat/-/dateformat-5.0.3.tgz"
+  "version" "5.0.3"
+
+"dayjs@^1.11.4":
+  "integrity" "sha512-Zj/lPM5hOvQ1Bf7uAvewDaUcsJoI6JmNqmHhHl3nyumwe0XHwt8sWdOVAPACJzCebL8gQCi+K49w7iKWnGwX9g=="
+  "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.11.4.tgz"
+  "version" "1.11.4"
 
 "debug@^2.6.9":
   "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
@@ -1816,6 +1838,11 @@
   "version" "1.1.6"
   optionalDependencies:
     "fsevents" "^2.3.2"
+
+"react-timeago@^7.1.0":
+  "integrity" "sha512-rouF7MiEm55fH791Y8cg+VobIJgx8gtNJ+gjr86R4ZqO1WKPkXiXjdT/lRzrvEkUzsxT1exHqV2V+Zdi114H3A=="
+  "resolved" "https://registry.npmjs.org/react-timeago/-/react-timeago-7.1.0.tgz"
+  "version" "7.1.0"
 
 "react@^16 || ^17 || ^18", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.11.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.8", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
