@@ -1,14 +1,17 @@
 import React, { Fragment, useState } from "react";
-import { deleteCookie, setCookie } from "cookies-next";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
 import { atom, useAtom } from "jotai";
 import { decodeToken } from "react-jwt";
+import Cookies from "js-cookie";
+import tokenHandler from "../../lib/tokenHandler";
 
 export type User = {
   username: string;
   isAdmin: boolean;
+  accessToken: string;
+  refreshToken: string;
 };
 
 export type JWT = {
@@ -41,22 +44,23 @@ const Login: React.FC = () => {
 
     const data = await res.json();
 
-    setCookie("access_token", data.access_token);
-    setCookie("refresh_token", data.refresh_token);
     const decoded = decodeToken<JWT>(data.access_token);
 
     if (decoded) {
-      setUser({
+      const user: User = {
         username: decoded.sub,
         isAdmin: decoded?.roles.some((role) => role === "ROLE_ADMIN"),
-      });
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+      };
+      tokenHandler.setUser(user);
+      setUser(user);
     }
   };
 
   const handleSignOut = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    deleteCookie("access_token");
-    deleteCookie("refresh_token");
+    tokenHandler.removeUser();
     setUser(undefined);
   };
 
@@ -82,7 +86,7 @@ const Login: React.FC = () => {
           {user?.username && (
             <div className="px-4 py-3">
               <p className="text-sm">
-                Signed in as <b>{user.username}</b>
+                Signed in as <b className="capitalize">{user.username}</b>
               </p>
             </div>
           )}
@@ -105,7 +109,7 @@ const Login: React.FC = () => {
             </div>
           ) : (
             <div className="py-1">
-              <div className="px-3 py-4 space-y-3">
+              <div className="flex flex-col px-3 py-4 space-y-3">
                 <div>
                   <label
                     htmlFor="username"
@@ -118,7 +122,7 @@ const Login: React.FC = () => {
                       type="text"
                       name="username"
                       id="username"
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                       placeholder="jsmith"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
@@ -138,7 +142,7 @@ const Login: React.FC = () => {
                       type="password"
                       name="password"
                       id="password"
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -147,7 +151,7 @@ const Login: React.FC = () => {
 
                 <button
                   onClick={(e) => handleLogin(e)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  className="text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
                 >
                   Login
                 </button>
