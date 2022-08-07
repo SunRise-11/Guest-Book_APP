@@ -18,5 +18,5 @@ main {
 
 .post_input textarea {
   resize: none;
-  @apply block bg-stone-100 hover:bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36 text-2xl;
+  @apply block bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36 text-2xl;
 }
