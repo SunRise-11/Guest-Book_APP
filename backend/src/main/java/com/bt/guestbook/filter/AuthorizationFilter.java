@@ -24,6 +24,7 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -61,13 +62,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    log.error("error occurred when logging in: {}", e.getMessage());
+                    log.error("authorization error occurred: {}", e.getMessage());
 
-                    response.setHeader("error", e.getMessage());
-                    response.setStatus(FORBIDDEN.value());
+                    if (request.getHeader("Authorization").isEmpty()) {
+                        response.setStatus(FORBIDDEN.value());
+                    } else {
+                        response.setStatus(UNAUTHORIZED.value());
+                    }
 
                     Map<String, String> error = new HashMap<>();
-                    error.put("error_message", e.getMessage());
+                    error.put("message", e.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
