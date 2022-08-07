@@ -6,14 +6,7 @@ import Container from "./components/Container";
 import { userAtom } from "./components/Login";
 import NewPost from "./components/NewPost";
 import Post, { PostType } from "./components/Post";
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error("An error occurred while fetching the data.");
-  }
-  return res.json();
-};
+import requestAPI from "./lib/requestAPI";
 
 const UnableToFetchPosts: React.FC = () => (
   <Container className="flex items-center justify-center flex-wrap flex-col select-none">
@@ -26,9 +19,9 @@ const UnableToFetchPosts: React.FC = () => (
 
 const Home: NextPage = () => {
   const [user] = useAtom(userAtom);
-  const { data: posts, error } = useSWR<PostType[]>(
-    "http://localhost:8080/api/post",
-    fetcher
+  const { data: posts, error } = useSWR<{ data: PostType[] }>(
+    "/post",
+    requestAPI.get
   );
 
   if (error) return <UnableToFetchPosts />;
@@ -38,9 +31,9 @@ const Home: NextPage = () => {
     <div className="space-y-6">
       {user && <NewPost user={user} />}
 
-      {posts &&
-        posts.length > 0 &&
-        posts.map((post) => {
+      {posts.data &&
+        posts.data.length > 0 &&
+        posts.data.map((post) => {
           return <Post key={post.id} post={post} />;
         })}
     </div>
