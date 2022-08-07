@@ -23,6 +23,8 @@ export const userAtom = atom<User | undefined>(undefined);
 const Login: React.FC = () => {
   const [error, setError] = useState("");
   const [user, setUser] = useAtom(userAtom);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -32,8 +34,8 @@ const Login: React.FC = () => {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
       body: new URLSearchParams({
-        username: "admin",
-        password: "password",
+        username,
+        password,
       }),
     });
 
@@ -106,25 +108,27 @@ const Login: React.FC = () => {
               <div className="px-3 py-4 space-y-3">
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="username"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Username
                   </label>
                   <div className="mt-1">
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
+                      type="text"
+                      name="username"
+                      id="username"
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                       placeholder="jsmith"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
                 </div>
 
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Password
@@ -135,12 +139,16 @@ const Login: React.FC = () => {
                       name="password"
                       id="password"
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                      placeholder=""
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                 </div>
 
-                <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                <button
+                  onClick={(e) => handleLogin(e)}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                >
                   Login
                 </button>
               </div>
@@ -154,7 +162,7 @@ const Login: React.FC = () => {
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                       }
                       block w-full text-left px-4 py-2 text-sm`}
-                      onClick={(e) => handleLogin(e)}
+                      onClick={(e) => handleSignOut(e)}
                     >
                       Sign out
                     </button>
