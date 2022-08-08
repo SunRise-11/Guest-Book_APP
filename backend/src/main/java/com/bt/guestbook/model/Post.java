@@ -25,4 +25,6 @@ public class Post {
     private String type;
     private String data;
     private boolean approved;
+    private Long createdAt;
+    private Long updatedAt;
 }
