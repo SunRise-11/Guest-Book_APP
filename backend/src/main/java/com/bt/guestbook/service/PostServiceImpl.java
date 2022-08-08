@@ -6,13 +6,12 @@ import com.bt.guestbook.repository.PostRepository;
 import com.bt.guestbook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import javax.management.RuntimeErrorException;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,11 +28,30 @@ public class PostServiceImpl implements PostService {
         AppUser user = userRepository.getUserByUsername(username);
         log.info("saving post by {} with id {}", user.getUsername(), user.getId());
         post.setUser(user);
+        Long timeCreated = new Date(System.currentTimeMillis()).getTime();
+        post.setCreatedAt(timeCreated);
+        post.setUpdatedAt(timeCreated);
         return postRepository.save(post);
     }
 
     @Override
     public List<Post> getPosts() {
+        String username = "";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        }
+
+        if (!username.isEmpty()) {
+            AppUser user = userRepository.getUserByUsername(username);
+            if (user.isAdmin()) {
+                log.info("fetching all approved posts as admin");
+                return postRepository.findAll();
+            }
+
+        }
+
         log.info("fetching all approved posts");
         return postRepository.findByApprovedTrue();
     }
@@ -46,7 +64,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post approvedPost(Long id) {
         try {
+            log.info("approving post {}", id);
             Post post = postRepository.getById(id);
+            post.setUpdatedAt(new Date(System.currentTimeMillis()).getTime());
             post.setApproved(true);
             return post;
         } catch (Exception e) {
@@ -56,20 +76,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void removePostById(Long id) {
-        Post post = postRepository.getById(id);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AppUser user = userRepository.getUserByUsername(auth.getPrincipal().toString());
-
-        if (user.isAdmin() || Objects.equals(post.getUser().getId(), user.getId())) {
-            try {
-                postRepository.delete(postRepository.getById(id));
-            } catch (Exception e) {
-                throw new RuntimeException("failed to delete post");
-            }
-        }
-
-        throw new RuntimeException("failed to delete post");
+        log.info("deleting post ");
+        postRepository.delete(postRepository.getById(id));
     }
 
     @Override
