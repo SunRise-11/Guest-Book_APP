@@ -9,7 +9,7 @@ const Container: React.FC<
 > = ({ children, className }) => {
   return (
     <div
-      className={`py-6 px-6 border rounded-lg space-y-3 bg-white shadow-md ${className}`}
+      className={`py-6 px-6 border rounded-lg bg-white shadow-md ${className}`}
     >
       {children}
     </div>
