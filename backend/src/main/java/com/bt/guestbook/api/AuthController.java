@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bt.guestbook.model.AppUser;
+import com.bt.guestbook.security.TokenHandler;
 import com.bt.guestbook.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthController {
 
     private final UserService userService;
+    private final TokenHandler tokenHandler;
 
     @GetMapping("/auth/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -46,19 +48,14 @@ public class AuthController {
 
                 AppUser user = userService.getUser(username);
 
-                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                Collection<GrantedAuthority> authorities = new ArrayList<>();
                 if (user.isAdmin()) {
-                    authorities.add(new SimpleGrantedAuthority("ADMIN"));
+                    authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                 } else {
-                    authorities.add(new SimpleGrantedAuthority("USER"));
+                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                 }
 
-                String accessToken = JWT.create()
-                        .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                        .sign(algorithm);
+                String accessToken = tokenHandler.createAccessToken(request, user.getUsername(), authorities);
 
 
                 Map<String, String> tokens = new HashMap<>();
