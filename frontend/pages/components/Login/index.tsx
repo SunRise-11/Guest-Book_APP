@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
+import { atom, useAtom } from "jotai";
+import Router from "next/router";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
-import { atom, useAtom } from "jotai";
 import { decodeToken } from "react-jwt";
-import Cookies from "js-cookie";
 import tokenHandler from "../../lib/tokenHandler";
 
 export type User = {
@@ -42,19 +42,23 @@ const Login: React.FC = () => {
       }),
     });
 
-    const data = await res.json();
+    try {
+      const data = await res.json();
+      const decoded = decodeToken<JWT>(data.access_token);
 
-    const decoded = decodeToken<JWT>(data.access_token);
-
-    if (decoded) {
-      const user: User = {
-        username: decoded.sub,
-        isAdmin: decoded?.roles.some((role) => role === "ROLE_ADMIN"),
-        accessToken: data.access_token,
-        refreshToken: data.refresh_token,
-      };
-      tokenHandler.setUser(user);
-      setUser(user);
+      if (decoded) {
+        const user: User = {
+          username: decoded.sub,
+          isAdmin: decoded?.roles.some((role) => role === "ROLE_ADMIN"),
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+        };
+        tokenHandler.setUser(user);
+        setUser(user);
+      }
+    } catch (error) {
+      setError("username / password is incorrect");
+      return;
     }
   };
 
@@ -82,7 +86,7 @@ const Login: React.FC = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+        <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
           {user?.username && (
             <div className="px-4 py-3">
               <p className="text-sm">
@@ -155,6 +159,10 @@ const Login: React.FC = () => {
                 >
                   Login
                 </button>
+
+                {error && (
+                  <p className="text-red-500 text-sm">Error: {error}</p>
+                )}
               </div>
 
               {user && (
