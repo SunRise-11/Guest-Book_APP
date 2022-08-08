@@ -9,14 +9,26 @@ main {
 }
 
 .post_input {
-  @apply relative col-span-10  flex flex-col flex-grow  min-h-[3rem];
+  @apply relative col-span-10  flex flex-col flex-grow min-h-[3rem];
 }
 
 .post_input .create_btn {
-  @apply absolute z-0 w-full h-12 flex items-center justify-center bg-stone-100 hover:bg-stone-200 rounded-md;
+  @apply absolute w-full h-12 flex items-center justify-center rounded-md bg-stone-100 hover:bg-stone-200 text-white font-semibold select-none cursor-pointer;
+}
+
+.post_input button[type="submit"] {
+  @apply w-full h-10 flex items-center justify-center rounded-md bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors;
+}
+
+.post_input button[type="submit"]:disabled {
+  @apply bg-stone-100 hover:bg-stone-200 text-stone-700 cursor-not-allowed;
+}
+
+.post_input .text_input {
+  @apply bg-stone-200 rounded-md mb-2 max-h-48 overflow-hidden;
 }
 
 .post_input textarea {
   resize: none;
-  @apply block bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36 text-2xl;
+  @apply block bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36 text-xl;
 }
