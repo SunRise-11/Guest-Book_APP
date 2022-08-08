@@ -9,10 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @RequestMapping("/api")
@@ -22,7 +24,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping(path = "/post", produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/post", method = GET,produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Post>> getPosts() {
         return ResponseEntity.ok().body(postService.getPosts());
     }
@@ -40,10 +42,10 @@ public class PostController {
         return ResponseEntity.created(uri).body(postService.savePost(post, username));
     }
 
-    @DeleteMapping(path = "/post/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable long id) {
+    @DeleteMapping(path = "/post")
+    public ResponseEntity<?> deletePost(@RequestBody Long id) {
         postService.removePostById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping(path = "/post", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
