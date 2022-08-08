@@ -2,6 +2,7 @@ package com.bt.guestbook;
 
 import com.bt.guestbook.model.AppUser;
 import com.bt.guestbook.model.Post;
+import com.bt.guestbook.security.TokenHandler;
 import com.bt.guestbook.service.PostService;
 import com.bt.guestbook.service.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -27,10 +28,14 @@ public class GuestbookApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "OPTIONS", "POST", "PUT", "DELETE");
             }
         };
     }
+
+    @Bean
+    TokenHandler tokenHandler() { return  new TokenHandler(); }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,13 +53,12 @@ public class GuestbookApplication {
             AppUser user2 = new AppUser(null, "user2", "password", false, new ArrayList<>());
             userService.saveUser(user2);
 
-            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true), "user");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "user");
 
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "user");
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, null,null), "user");
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, null,null), "admin");
         };
     }
 
