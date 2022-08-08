@@ -28,7 +28,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         </div>
       </header>
 
-      <main className="m-auto border-r border-l max-w-4xl">
+      <main className="m-auto border-r border-l max-w-2xl">
         <div className="px-6 py-6">{children}</div>
       </main>
     </div>
