@@ -118,6 +118,11 @@
   dependencies:
     "mini-svg-data-uri" "^1.2.3"
 
+"@types/compress.js@^1.1.1":
+  "integrity" "sha512-6ShoR1Qu7jyD/Q2T5m6b+rt/iu/4WvMx+UD6QHFwUE3iVlmQgcoEU5Vc+oQvc41XLsCp2QQ4OWWkc0WeL46v/A=="
+  "resolved" "https://registry.npmjs.org/@types/compress.js/-/compress.js-1.1.1.tgz"
+  "version" "1.1.1"
+
 "@types/dateformat@^5.0.0":
   "integrity" "sha512-SZg4JdHIWHQGEokbYGZSDvo5wA4TLYPXaqhigs/wH+REDOejcJzgH+qyY+HtEUtWOZxEUkbhbdYPqQDiEgrXeA=="
   "resolved" "https://registry.npmjs.org/@types/dateformat/-/dateformat-5.0.0.tgz"
@@ -467,6 +472,13 @@
   "version" "1.0.8"
   dependencies:
     "delayed-stream" "~1.0.0"
+
+"compress.js@^1.2.2":
+  "integrity" "sha512-eIsMmzyBtPVDdPtpmPXTRB6uiLjgTXygYl0KCVVp0I/U/++YzZtEkhVTuWH97dzTxKvzAcZMFwYUHGC09BSUqg=="
+  "resolved" "https://registry.npmjs.org/compress.js/-/compress.js-1.2.2.tgz"
+  "version" "1.2.2"
+  dependencies:
+    "regenerator-runtime" "^0.13.9"
 
 "concat-map@0.0.1":
   "integrity" "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg=="
@@ -1772,7 +1784,7 @@
   dependencies:
     "picomatch" "^2.2.1"
 
-"regenerator-runtime@^0.13.4":
+"regenerator-runtime@^0.13.4", "regenerator-runtime@^0.13.9":
   "integrity" "sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA=="
   "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz"
   "version" "0.13.9"
