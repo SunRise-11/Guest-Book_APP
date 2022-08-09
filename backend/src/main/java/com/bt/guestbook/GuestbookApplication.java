@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @SpringBootApplication
 public class GuestbookApplication {
@@ -44,21 +45,23 @@ public class GuestbookApplication {
     @Bean
     CommandLineRunner run(UserService userService, PostService postService) {
         return args -> {
-            AppUser admin = new AppUser(null, "admin", "password", true, new ArrayList<>());
+            AppUser admin = new AppUser(100L, "admin", "password", true, new ArrayList<>());
             userService.saveUser(admin);
 
-            AppUser user = new AppUser(null, "user", "password", false, new ArrayList<>());
+            AppUser user = new AppUser(102L, "john.doe", "password", false, new ArrayList<>());
             userService.saveUser(user);
 
-            AppUser user2 = new AppUser(null, "user2", "password", false, new ArrayList<>());
+            AppUser user2 = new AppUser(103L, "jane.smith", "password", false, new ArrayList<>());
             userService.saveUser(user2);
 
-            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true, null,null), "user");
+            Long date = new Date(System.currentTimeMillis()).getTime();
 
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, null,null), "user");
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, null,null), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "admin");
+            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "john.doe");
+
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, date,date), "jane.smith");
+            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, date,date), "john.doe");
         };
     }
 
