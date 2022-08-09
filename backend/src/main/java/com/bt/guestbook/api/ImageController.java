@@ -27,7 +27,7 @@ public class ImageController {
     ImageRepository imageRepository;
 
     @PostMapping("/image/upload")
-    public ResponseEntity<ApiResponse> uploadImage(@RequestParam("image") MultipartFile file)
+    public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file)
             throws IOException {
         UUID uuid = UUID.randomUUID();
         String filename = uuid + "." + FilenameUtils.getExtension(file.getOriginalFilename());
@@ -37,7 +37,7 @@ public class ImageController {
                 .type(file.getContentType())
                 .image(ImageUtility.compressImage(file.getBytes())).build());
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse(filename));
+                .body(filename);
     }
 
     @GetMapping(path = {"/image/get/{name}"})
