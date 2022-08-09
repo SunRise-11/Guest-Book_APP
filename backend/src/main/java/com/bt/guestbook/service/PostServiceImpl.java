@@ -25,7 +25,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post savePost(Post post, String username) {
-        AppUser user = userRepository.getUserByUsername(username);
+        AppUser user = userRepository.findByUsername(username);
         log.info("saving post by {} with id {}", user.getUsername(), user.getId());
         post.setUser(user);
         Long timeCreated = new Date(System.currentTimeMillis()).getTime();
@@ -44,7 +44,7 @@ public class PostServiceImpl implements PostService {
         }
 
         if (!username.isEmpty()) {
-            AppUser user = userRepository.getUserByUsername(username);
+            AppUser user = userRepository.findByUsername(username);
             if (user.isAdmin()) {
                 log.info("fetching all approved posts as admin");
                 return postRepository.findAll();
@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
         Post storedPost = postRepository.getById(post.getId());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AppUser user = userRepository.getUserByUsername(auth.getPrincipal().toString());
+        AppUser user = userRepository.findByUsername(auth.getPrincipal().toString());
 
         if (user.isAdmin() || Objects.equals(storedPost.getUser().getId(), user.getId())) {
             storedPost.setType(post.getType());
