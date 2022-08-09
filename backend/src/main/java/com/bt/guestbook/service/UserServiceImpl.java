@@ -59,16 +59,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean deleteUserById(Long id) {
-        try {
-            userRepository.delete(userRepository.getById(id));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
     public List<AppUser> getUsers() {
         return userRepository.findAll();
     }
