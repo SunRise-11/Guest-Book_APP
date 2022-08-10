@@ -11,12 +11,12 @@ import { PostType } from ".";
 
 const UserTitle: React.FC<{ post: PostType }> = ({ post }) => {
   const [currentUser] = useAtom(userAtom);
-  const [modal, setModal] = useAtom(EditPostModalOpen);
+  const [_, setModal] = useAtom(EditPostModalOpen);
   return (
     <div className="flex justify-between w-full items-center">
       <div className="flex space-x-3 w-full">
         <div className="col-span-1 select-none">
-          <span className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-500">
+          <span className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-600">
             <span className="text-lg font-medium leading-none text-white uppercase">
               {post.user.username.slice(0, 2)}
             </span>
