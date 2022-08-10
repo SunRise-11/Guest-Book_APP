@@ -1,9 +1,12 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { approvedPostsAtom, pendingPostsAtom } from "../..";
+
 import requestAPI from "../../lib/requestAPI";
-import Container from "../Container";
 import { userAtom } from "../Login";
+import { approvedPostsAtom, pendingPostsAtom } from "../..";
+
+import Container from "../Container";
+
 import { ImagePost, TextPost } from "./PostTypes";
 
 export type PostType = {

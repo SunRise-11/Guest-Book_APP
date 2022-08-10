@@ -1,5 +1,6 @@
 import axios from "axios";
 import { isExpired } from "react-jwt";
+
 import tokenHandler from "./tokenHandler";
 
 const instance = axios.create({
@@ -13,7 +14,7 @@ instance.interceptors.request.use(
   (config) => {
     const accessToken = tokenHandler.getLocalAccessToken();
     const refreshToken = tokenHandler.getLocalRefreshToken();
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && config && config.headers) {
       if (isExpired(accessToken)) {
         config.headers["Authorization"] = "Bearer " + refreshToken;
       } else {

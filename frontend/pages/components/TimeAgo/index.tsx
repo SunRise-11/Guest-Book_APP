@@ -1,6 +1,7 @@
 import React from "react";
-import { default as TimeAgoComponent, Formatter } from "react-timeago";
 import dateFormat from "dateformat";
+
+import { default as TimeAgoComponent, Formatter } from "react-timeago";
 
 const formatter: Formatter = (
   value,

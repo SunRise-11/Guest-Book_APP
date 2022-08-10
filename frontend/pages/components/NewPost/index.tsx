@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { User } from "../Login";
 import NewPostModal from "./NewPostModal";
 

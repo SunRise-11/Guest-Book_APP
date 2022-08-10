@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment, useEffect, useState } from "react";
 import { atom, useAtom } from "jotai";
-import { Dialog, Transition } from "@headlessui/react";
+
+import requestAPI from "../../lib/requestAPI";
 import { userAtom } from "../Login";
 import { approvedPostsAtom, pendingPostsAtom } from "../..";
-import requestAPI from "../../lib/requestAPI";
+
+import { Dialog, Transition } from "@headlessui/react";
+
 import { PostType } from ".";
 
 export const EditPostModalOpen = atom<{

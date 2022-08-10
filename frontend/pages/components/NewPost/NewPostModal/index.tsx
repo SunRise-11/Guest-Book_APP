@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { ChangeEvent, Fragment, useRef, useState } from "react";
 import { useAtom } from "jotai";
+import Compress from "compress.js";
+
+import requestAPI from "../../../lib/requestAPI";
+import { userAtom } from "../../Login";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { PhotographIcon, XIcon } from "@heroicons/react/solid";
-import requestAPI from "../../../lib/requestAPI";
 import { pendingPostsAtom } from "../../..";
-
-import Compress from "compress.js";
-import { userAtom } from "../../Login";
 
 const NewPostModal: React.FC<{
   open: boolean;

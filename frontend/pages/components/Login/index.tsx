@@ -1,10 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { atom, useAtom } from "jotai";
-import Router from "next/router";
+import { decodeToken } from "react-jwt";
+
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-
-import { decodeToken } from "react-jwt";
 import tokenHandler from "../../lib/tokenHandler";
 
 export type User = {

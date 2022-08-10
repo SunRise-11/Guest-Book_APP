@@ -1,13 +1,14 @@
-import { atom, useAtom } from "jotai";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import useSWR from "swr";
+import { atom, useAtom } from "jotai";
+
+import { userAtom } from "./components/Login";
+import requestAPI from "./lib/requestAPI";
+
 import { ExclamationIcon } from "@heroicons/react/outline";
 import Container from "./components/Container";
-import { userAtom } from "./components/Login";
-import NewPost from "./components/NewPost";
 import Post, { PostType } from "./components/Post";
-import requestAPI from "./lib/requestAPI";
-import { useEffect, useLayoutEffect, useState } from "react";
+import NewPost from "./components/NewPost";
 import EditPostModal from "./components/Post/EditPostModal";
 
 const UnableToFetchPosts: React.FC = () => (

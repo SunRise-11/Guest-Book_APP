@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { useAtom } from "jotai";
-import { PostType } from ".";
+
 import { userAtom } from "../Login";
+
 import TimeAgo from "../TimeAgo";
 import { EditPostModalOpen } from "./EditPostModal";
+
+import { PostType } from ".";
 
 const UserTitle: React.FC<{ post: PostType }> = ({ post }) => {
   const [currentUser] = useAtom(userAtom);
