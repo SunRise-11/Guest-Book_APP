@@ -38,17 +38,17 @@ const NewPostModal: React.FC<{
   };
 
   const handleImageUpload = async (e: React.MouseEvent<HTMLElement>) => {
-    // upload image
     if (imageData) {
+      // image processing
       const compress = new Compress();
       const compressedImage = await compress.compress(
         [new File([imageData], "name")],
         {
-          size: 4, // the max size in MB, defaults to 2MB
-          quality: 0.75, // the quality of the image, max is 1,
-          maxWidth: 600, // the max width of the output image, defaults to 1920px
-          maxHeight: 600, // the max height of the output image, defaults to 1920px
-          resize: true, // defaults to true, set false if you do not want to resize the image width and height
+          size: 4,
+          quality: 0.75,
+          maxWidth: 600,
+          maxHeight: 600,
+          resize: true,
         }
       );
 
@@ -131,7 +131,7 @@ const NewPostModal: React.FC<{
                       <>
                         <button
                           onClick={() => setImage(undefined)}
-                          className="absolute m-2 p-2 top-0 right-0 rounded-full transition-colors bg-stone-200 hover:bg-blue-500 hover:text-white"
+                          className="delete-image"
                         >
                           <XIcon className="w-6 h-6" />
                         </button>
@@ -164,7 +164,7 @@ const NewPostModal: React.FC<{
                           imageUploadRef.current &&
                           imageUploadRef.current.click()
                         }
-                        className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-stone-100 hover:bg-stone-200"
+                        className="image-selection"
                       >
                         <span className="text-lg font-medium leading-none text-stone-600 uppercase">
                           <PhotographIcon className="w-6 h-6" />
@@ -173,6 +173,7 @@ const NewPostModal: React.FC<{
                     </div>
 
                     <button
+                      className="create"
                       type="submit"
                       disabled={
                         (data === undefined || data === "") && image === null
