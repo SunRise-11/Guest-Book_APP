@@ -58,10 +58,10 @@ const NewPostModal: React.FC<{
       );
 
       await requestAPI.post("/image/upload", form).then(async (res) => {
-        if (res.data.message) {
+        if (res.data.file) {
           const resPostCreation = await requestAPI.post("/post", {
             type: "image",
-            data: res.data.message,
+            data: res.data.file,
           });
 
           if (resPostCreation.status === 201) {
@@ -88,7 +88,9 @@ const NewPostModal: React.FC<{
       .then((res) => {
         if (res.status === 201) {
           resetNewPost();
-          setPendingPosts([...pendingPosts, res.data]);
+          if (user?.isAdmin) {
+            setPendingPosts([...pendingPosts, res.data]);
+          }
         } else {
           throw new Error("unable to create post");
         }
@@ -157,7 +159,7 @@ const NewPostModal: React.FC<{
                         onChange={(e) => onFileInputChange(e)}
                       />
                       <button
-                        onClick={(e) =>
+                        onClick={() =>
                           imageUploadRef.current &&
                           imageUploadRef.current.click()
                         }
