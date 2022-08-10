@@ -23,6 +23,13 @@ npm run build
 npm run start
 ```
 
+### default users
+
+| username   | password | is_admin |
+|------------|----------|----------|
+| admin      | pasword  | TRUE     |
+| jane.smith | pasword  | FALSE    |
+
 # Application Task
 
 ## Requirements:
