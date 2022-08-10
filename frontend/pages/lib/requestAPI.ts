@@ -4,7 +4,7 @@ import { isExpired } from "react-jwt";
 import tokenHandler from "./tokenHandler";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: `http://${process.env.API_ENDPOINT}:${process.env.API_PORT}/api`,
   headers: {
     "Content-Type": "application/json",
   },
