@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { atom, useAtom } from "jotai";
 
-import { userAtom } from "./components/Login";
-import requestAPI from "./lib/requestAPI";
+import { userAtom } from "../components/Login";
+import requestAPI from "../lib/requestAPI";
 
 import { ExclamationIcon } from "@heroicons/react/outline";
-import Container from "./components/Container";
-import Post, { PostType } from "./components/Post";
-import NewPost from "./components/NewPost";
-import EditPostModal from "./components/EditPostModal";
+import Container from "../components/Container";
+import Post, { PostType } from "../components/Post";
+import NewPost from "../components/NewPost";
+import EditPostModal from "../components/EditPostModal";
 
 const UnableToFetchPosts: React.FC = () => (
   <Container className="flex items-center justify-center flex-wrap flex-col select-none">

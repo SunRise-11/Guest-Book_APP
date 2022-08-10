@@ -4,7 +4,7 @@ import { atom, useAtom } from "jotai";
 
 import requestAPI from "../../lib/requestAPI";
 import { userAtom } from "../Login";
-import { approvedPostsAtom, pendingPostsAtom } from "../..";
+import { approvedPostsAtom, pendingPostsAtom } from "../../pages";
 
 import { Dialog, Transition } from "@headlessui/react";
 

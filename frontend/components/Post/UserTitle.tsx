@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { useAtom } from "jotai";
 
@@ -49,32 +48,4 @@ const UserTitle: React.FC<{ post: PostType }> = ({ post }) => {
   );
 };
 
-const TextPost: React.FC<{ post: PostType }> = ({ post }) => {
-  return (
-    <>
-      <div className={`flex justify-between items-start`}>
-        <UserTitle post={post} />
-      </div>
-      <p className="pt-4">{post.data}</p>
-    </>
-  );
-};
-
-const ImagePost: React.FC<{ post: PostType }> = ({ post }) => {
-  return (
-    <>
-      <div className={`flex justify-between items-start`}>
-        <UserTitle post={post} />
-      </div>
-      <p className="pt-4">
-        <img
-          src={`http://localhost:8080/api/image/get/${post.data}`}
-          className="rounded-lg"
-          alt=""
-        />
-      </p>
-    </>
-  );
-};
-
-export { ImagePost, TextPost };
+export default UserTitle;

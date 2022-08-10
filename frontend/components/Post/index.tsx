@@ -3,11 +3,11 @@ import React from "react";
 
 import requestAPI from "../../lib/requestAPI";
 import { userAtom } from "../Login";
-import { approvedPostsAtom, pendingPostsAtom } from "../..";
+import { approvedPostsAtom, pendingPostsAtom } from "../../pages";
 
 import Container from "../Container";
-
-import { ImagePost, TextPost } from "./PostTypes";
+import TextPost from "./TextPost";
+import ImagePost from "./ImagePost";
 
 export type PostType = {
   id: number;

@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import { useAtom } from "jotai";
 
-import Login, { userAtom } from "./components/Login";
-import tokenHandler from "./lib/tokenHandler";
+import Login, { userAtom } from "../components/Login";
+import tokenHandler from "../lib/tokenHandler";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useAtom(userAtom);
