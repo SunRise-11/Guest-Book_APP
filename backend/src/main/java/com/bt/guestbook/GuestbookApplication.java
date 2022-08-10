@@ -45,23 +45,20 @@ public class GuestbookApplication {
     @Bean
     CommandLineRunner run(UserService userService, PostService postService) {
         return args -> {
-            AppUser admin = new AppUser(100L, "admin", "password", true, new ArrayList<>());
-            userService.saveUser(admin);
-
-            AppUser user = new AppUser(102L, "john.doe", "password", false, new ArrayList<>());
-            userService.saveUser(user);
-
-            AppUser user2 = new AppUser(103L, "jane.smith", "password", false, new ArrayList<>());
-            userService.saveUser(user2);
+            userService.saveUser(new AppUser(100L, "admin", "password", true, new ArrayList<>()));
+            userService.saveUser(new AppUser(102L, "john.doe", "password", false, new ArrayList<>()));
+            userService.saveUser(new AppUser(103L, "jane.smith", "password", false, new ArrayList<>()));
+            userService.saveUser(new AppUser(103L, "ella.gale", "password", false, new ArrayList<>()));
+            userService.saveUser(new AppUser(103L, "ben.slater", "password", false, new ArrayList<>()));
+            userService.saveUser(new AppUser(103L, "lisa.perez", "password", false, new ArrayList<>()));
 
             Long date = new Date(System.currentTimeMillis()).getTime();
 
-            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "admin");
-            postService.savePost(new Post(null, null, "text", "this is a post", true, date,date), "john.doe");
-
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, date,date), "jane.smith");
-            postService.savePost(new Post(null, null, "text", "this is a post that is not approved", false, date,date), "john.doe");
+            postService.savePost(new Post(null, null, "text", "Overall, I had a great experience with the room; staff was incredibly helpful, and the amenities were great. The room was wonderful, clean, and perfect to celebrate a birthday weekend.", true, date,date), "ella.gale");
+            postService.savePost(new Post(null, null, "text", "Excellent property and very convenient to USC activities. Front desk staff is extremely efficient, pleasant and helpful. Property is clean and has a fantastic old time charm.", true, date,date), "ben.slater");
+            postService.savePost(new Post(null, null, "text", "The best hotel I’ve ever been privileged enough to stay at. Gorgeous building, and it only gets more breathtaking when you walk in. High quality rooms (there was even a tv by the shower), and high quality service. Also, they are one of few hotels that allow people under 21 to book a reservation.", true, date,date), "john.doe");
+            postService.savePost(new Post(null, null, "text", "Took advantage of the downtown location to walk to dinner, check out a couple galleries, and have drinks. It was great. Service top notch as always. Bed comfort can not be beat.", false, date,date), "jane.smith");
+            postService.savePost(new Post(null, null, "text", "They were extremely accommodating and allowed us to check in early at like 10am. We got to hotel super early and I didn’t wanna wait. So this was a big plus. The sevice was exceptional as well. Would definitely send a friend there.", false, date,date), "lisa.perez");
         };
     }
 

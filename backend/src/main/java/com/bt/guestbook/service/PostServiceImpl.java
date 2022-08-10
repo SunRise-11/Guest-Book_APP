@@ -88,7 +88,6 @@ public class PostServiceImpl implements PostService {
         AppUser user = userRepository.findByUsername(auth.getPrincipal().toString());
 
         if (user.isAdmin() || Objects.equals(storedPost.getUser().getId(), user.getId())) {
-            storedPost.setType(post.getType());
             storedPost.setData(post.getData());
             return storedPost;
         }

@@ -25,6 +25,7 @@ public class Post {
     private AppUser user;
 
     private String type;
+    @Column(length = 1024)
     private String data;
     private boolean approved;
     private Long createdAt;
