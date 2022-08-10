@@ -54,10 +54,13 @@ const Login: React.FC = () => {
         };
         tokenHandler.setUser(user);
         setUser(user);
+
+        setPassword("");
+        setUsername("");
+        setError("");
       }
     } catch (error) {
       setError("username / password is incorrect");
-      return;
     }
   };
 
