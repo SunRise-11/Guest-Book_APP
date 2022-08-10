@@ -108,7 +108,7 @@ const EditPostModal: React.FC = () => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative bg-white rounded-lg p-6 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-md sm:w-full sm:p-6">
-                <div className="post_input">
+                <div className="post_edit">
                   <div className="text_input">
                     {modal?.post?.type === "image" ? (
                       <>
@@ -129,6 +129,7 @@ const EditPostModal: React.FC = () => {
 
                   <div className="flex items-center space-x-2">
                     <button
+                      className="edit"
                       type="submit"
                       disabled={
                         data === undefined ||
@@ -142,6 +143,7 @@ const EditPostModal: React.FC = () => {
                       Edit
                     </button>
                     <button
+                      className="delete"
                       type="submit"
                       disabled={data === undefined || data === ""}
                       onClick={(e: React.MouseEvent<HTMLElement>) =>
