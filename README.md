@@ -1,4 +1,29 @@
-# Application Task - Guestbook
+# Guestbook
+
+## Run the project
+
+```
+git clone https://github.com/twilsonn/guestbook.git
+cd ./guestbook
+```
+
+### Backend
+
+```
+cd ./backend
+mvn clean compile exec:java
+```
+
+### Frontend
+
+```
+cd ./frontend
+npm install
+npm run build
+npm run start
+```
+
+# Application Task
 
 ## Requirements:
 
@@ -48,9 +73,8 @@ Technologies to use (Please use most recent supported versions available):
 |-----------------------|---------------------------------------------|------------------|
 | POST /api/auth/login  | log user in                                 | ALL              |
 | GET /api/auth/refresh | refresh auth token                          | ALL              |
-| GET /api/post         | gets all approved posts                     | ALL              |
-| POST /api/post        | creates a new post                          | USER             |
-| DELETE /api/post      | deletes a post (if admin or user owns post) | USER             |
-| PUT /api/post         | edits a post (if admin or user owns post)   | USER             |
-| GET /api/post/{id}    | approves post with ID {id}                  | ADMIN            |
-| GET /api/post/pending | gets all posts pending approval             | ADMIN            |
+| GET /api/post         | get all approved (pending for admins) posts | ALL              |
+| POST /api/post        | create a new post                           | USER             |
+| DELETE /api/post      | delete a post (if admin)                    | ADMIN            |
+| PUT /api/post         | edit a post (if admin)                      | ADMIN            |
+| GET /api/post/{id}    | approve a post with ID {id}                 | ADMIN            |
