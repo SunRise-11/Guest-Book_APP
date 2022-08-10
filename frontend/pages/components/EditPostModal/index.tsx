@@ -129,6 +129,15 @@ const EditPostModal: React.FC = () => {
 
                   <div className="flex items-center space-x-2">
                     <button
+                      className="delete"
+                      type="submit"
+                      onClick={(e: React.MouseEvent<HTMLElement>) =>
+                        handleDeletePost(e)
+                      }
+                    >
+                      Delete
+                    </button>
+                    <button
                       className="edit"
                       type="submit"
                       disabled={
@@ -141,16 +150,6 @@ const EditPostModal: React.FC = () => {
                       }
                     >
                       Edit
-                    </button>
-                    <button
-                      className="delete"
-                      type="submit"
-                      disabled={data === undefined || data === ""}
-                      onClick={(e: React.MouseEvent<HTMLElement>) =>
-                        handleDeletePost(e)
-                      }
-                    >
-                      Delete
                     </button>
                   </div>
                 </div>
