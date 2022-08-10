@@ -15,6 +15,7 @@
 	<description>BT Interview - Guestbook</description>
 	<properties>
 		<java.version>11</java.version>
+		<exec.mainClass>com.bt.guestbook.GuestbookApplication</exec.mainClass>
 	</properties>
 	<dependencies>
 		<dependency>
