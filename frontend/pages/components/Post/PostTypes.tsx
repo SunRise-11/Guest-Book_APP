@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { userAtom } from "../Login";
 
 import TimeAgo from "../TimeAgo";
-import { EditPostModalOpen } from "./EditPostModal";
+import { EditPostModalOpen } from "../EditPostModal";
 
 import { PostType } from ".";
 

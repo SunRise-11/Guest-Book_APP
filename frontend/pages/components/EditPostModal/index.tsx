@@ -8,7 +8,7 @@ import { approvedPostsAtom, pendingPostsAtom } from "../..";
 
 import { Dialog, Transition } from "@headlessui/react";
 
-import { PostType } from ".";
+import { PostType } from "../Post";
 
 export const EditPostModalOpen = atom<{
   open: boolean;
