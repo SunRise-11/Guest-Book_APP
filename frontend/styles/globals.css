@@ -8,27 +8,60 @@ main {
   @apply bg-stone-200;
 }
 
+.post_input .create-post_btn {
+  @apply absolute w-full h-12 flex items-center justify-center rounded-md bg-stone-100 hover:bg-stone-200 text-white font-semibold select-none cursor-pointer;
+}
+
+/* =============================== */
+
+.post_edit,
 .post_input {
   @apply relative col-span-10  flex flex-col flex-grow min-h-[3rem];
 }
 
-.post_input .create_btn {
-  @apply absolute w-full h-12 flex items-center justify-center rounded-md bg-stone-100 hover:bg-stone-200 text-white font-semibold select-none cursor-pointer;
+.post_edit button,
+.post_input button {
+  @apply w-full h-10 flex items-center justify-center rounded-md font-semibold select-none cursor-pointer transition-colors;
 }
 
-.post_input button[type="submit"] {
-  @apply w-full h-10 flex items-center justify-center rounded-md bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors;
+.post_input button.image-selection {
+  @apply rounded-full px-2 h-10 w-10 bg-stone-100 hover:bg-stone-200;
 }
 
-.post_input button[type="submit"]:disabled {
-  @apply bg-stone-100 hover:bg-stone-200 text-stone-700 cursor-not-allowed;
+.post_edit button,
+.post_input button.create {
+  @apply text-white;
 }
 
+.post_edit button.edit,
+.post_input button.create {
+  @apply bg-blue-500 hover:bg-blue-600;
+}
+
+.post_edit button.delete {
+  @apply bg-red-500 hover:bg-red-600;
+}
+
+.post_edit .text_input,
 .post_input .text_input {
   @apply bg-stone-200 rounded-md mb-2 max-h-48 overflow-hidden;
 }
 
+.post_edit textarea,
 .post_input textarea {
   resize: none;
-  @apply block bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36 text-xl;
+  @apply block bg-stone-200 rounded-md border-none focus:ring-0 w-full h-36;
+}
+
+.post_input textarea {
+  @apply text-xl;
+}
+
+.post_edit button:disabled,
+.post_input button:disabled {
+  @apply bg-stone-100 hover:bg-stone-200 text-stone-700 cursor-not-allowed;
+}
+
+.post_input button.delete-image {
+  @apply absolute w-auto m-2 p-2 top-0 right-0 rounded-full transition-colors bg-stone-200 hover:bg-blue-500 hover:text-white;
 }
