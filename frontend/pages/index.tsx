@@ -8,6 +8,7 @@ import NewPost from "./components/NewPost";
 import Post, { PostType } from "./components/Post";
 import requestAPI from "./lib/requestAPI";
 import { useEffect, useLayoutEffect, useState } from "react";
+import EditPostModal from "./components/Post/EditPostModal";
 
 const UnableToFetchPosts: React.FC = () => (
   <Container className="flex items-center justify-center flex-wrap flex-col select-none">
@@ -59,6 +60,8 @@ const Home: NextPage = () => {
   return (
     <div className="space-y-6">
       {user && <NewPost user={user} />}
+
+      <EditPostModal />
 
       {pendingPosts.length > 0 &&
         pendingPosts.map((post) => {
