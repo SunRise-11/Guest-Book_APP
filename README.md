@@ -7,14 +7,14 @@ git clone https://github.com/twilsonn/guestbook.git
 cd ./guestbook
 ```
 
-### Backend
+### Backend (requires Java 11)
 
 ```
 cd ./backend
 mvn clean compile exec:java
 ```
 
-### Frontend
+### Frontend (requires Node.js)
 
 ```
 cd ./frontend
