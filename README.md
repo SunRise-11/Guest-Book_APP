@@ -1,5 +1,7 @@
 # Guestbook
 
+A digital guest book application to post / manage customer feedback for hospitality. Frontend uses Next.js and backend uses Java Spring boot.
+
 ## Run the project
 
 ```
